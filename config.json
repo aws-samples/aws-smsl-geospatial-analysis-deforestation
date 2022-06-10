@@ -1,0 +1,9 @@
+    {
+    "aws": {
+        "access_key_id": "aws user access key",
+        "secret_access_key": "aws user secret key"
+    },
+    "sentinelhub": {
+        "instance_id": "instance_id from sentinel hub configuration"
+    }
+}
