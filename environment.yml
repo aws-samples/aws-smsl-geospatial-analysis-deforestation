@@ -4,6 +4,7 @@ dependencies:
   - pip
   - pip:
       - sentinelhub==3.4.1
+  - utils
   - conda
   - conda:
     - ipykernel 
@@ -15,5 +16,4 @@ dependencies:
     - plotly_express==0.4.1
     - rasterio==1.2.10
     - earthpy==0.9.4
-    - utils==1.0.1
     
