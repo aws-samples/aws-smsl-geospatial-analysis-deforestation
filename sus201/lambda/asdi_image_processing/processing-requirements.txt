@@ -1,0 +1,2 @@
+rasterio[s3]
+matplotlib
