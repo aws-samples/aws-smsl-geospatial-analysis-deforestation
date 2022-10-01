@@ -1,6 +1,9 @@
+import logging
+import os
+import boto3
+from botocore.exceptions import ClientError
 import os
 import json
-import boto3
 import datetime
 from sentinelhub import (
         CRS,
@@ -11,16 +14,46 @@ from sentinelhub import (
     )
 
 def lambda_handler(event, context):
-
-    print("Start date and time: " + str(datetime.datetime.now()))
-
     print(str(event))
-    coordA=event['a']
-    coordB=event['b']
-    coordC=event['c']
-    coordD=event['d']
-    startDate=event['startDate']
-    endDate=event['endDate']
+    route_key = event.get('requestContext', {}).get('routeKey')
+    connection_id = event.get('requestContext', {}).get('connectionId')
+    body = ""
+    domain = ""
+    stage = ""
+    if route_key is None or connection_id is None:
+        return {'statusCode': 400}
+
+    response = {'statusCode': 200}
+    if route_key == 'sendData':
+
+        body = event.get('body')
+        body = json.loads(body if body is not None else '{"msg": "error"}')    
+
+        domain = event.get('requestContext', {}).get('domainName')
+        stage = event.get('requestContext', {}).get('stage')
+        coordA = body['body']['data']['a']
+        coordB = body['body']['data']['b']
+        coordC = body['body']['data']['c']
+        coordD = body['body']['data']['d']
+        startDate = body['body']['data']['startDate']
+        endDate = body['body']['data']['endDate']
+        
+        '''
+        coordA = event.get('body',{}).get('data',{}).get('a')
+        coordB = event.get('body',{}).get('data',{}).get('b')
+        coordC = event.get('body',{}).get('data',{}).get('c')
+        coordD = event.get('body',{}).get('data',{}).get('d')
+        startDate = event.get('body',{}).get('data',{}).get('startDate')
+        endDate = event.get('body',{}).get('data',{}).get('endDate')
+        '''
+
+   
+    #coordA=data['a']
+    #coordB=data['b']
+    #coordC=data['c']
+    #coordD=data['d']
+    #startDate=data['startDate']
+    #endDate=data['endDate']
     
     config = SHConfig()
     
@@ -68,7 +101,7 @@ def lambda_handler(event, context):
                 #filtered_urls.append(tiles[count]+ '/' + band)
 
     sqs = boto3.client('sqs')
-    s3Folder = os.environ['s3Bucket'] + '-' + coordA + '-' + coordB + '-' + coordC + '-' + coordD 
+    s3Folder = os.environ['s3Bucket'] + coordA + '-' + coordB + '-' + coordC + '-' + coordD + '-' + startDate + '-' + endDate
     message = {}
     
     for url in filtered_urls:
@@ -92,12 +125,17 @@ def lambda_handler(event, context):
     '''        
 
     print("End date and time: " + str(datetime.datetime.now()))
+    print("Filtered URLs")
     print(filtered_urls)
 
     return {
-        'statusCode': 200,
-        'body': json.dumps('Complete')
+        'statusCode': 200
     }
+     
+    #return {
+    #    'statusCode': 200,
+    #    'body': json.dumps('Complete')
+    #}
 
-response=lambda_handler({"a": "-121.64","b": "39.68","c": "-121.68","d": "39.72","startDate": "2018-11-01T00:00:00","endDate": "2019-11-01T23:59:59"},[])
-print('response is ' + str(response))
+#response=lambda_handler({"a": "-121.64","b": "39.68","c": "-121.68","d": "39.72","startDate": "2018-11-01T00:00:00","endDate": "2019-11-01T23:59:59"},[])
+#print('response is ' + str(response))

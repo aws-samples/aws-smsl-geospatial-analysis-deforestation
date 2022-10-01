@@ -44,7 +44,7 @@ def lambda_handler(event, context):
         print(asdiS3bucket)
         asdiS3key = "/".join(asdisplittedpath[3:])
         print(asdiS3key)
-        imagename = asdisplittedpath[-4]+asdisplittedpath[-3]+asdisplittedpath[-2]+'.png'
+        imagename = asdisplittedpath[-4]+"-"+asdisplittedpath[-3]+"-"+asdisplittedpath[-2]+'.png'
         print(imagename)
 
         urlB04 = asdiS3bucket + asdiS3key + "/B04.jp2"
@@ -72,9 +72,9 @@ def lambda_handler(event, context):
         img_data.seek(0)
         print('before plt.figure')
         
-        bucket = s3.Bucket(BUCKET_NAME)
+        s3obj = boto3.client('s3')
         print('after the bucket')
-        bucket.put_object(Body=img_data, ContentType='image/png', Key=KEY+"/"+imagename)
+        s3obj.put_object(Body=img_data, Bucket=BUCKET_NAME, Key=KEY+"/"+imagename)
         print('all done')
 
 test = {
@@ -83,7 +83,7 @@ test = {
       "messageId": "8d4cd6c0-3f89-48bb-b871-69c5de0605fb",
       "receiptHandle": "AQEBRmu6vqdwGWy3/96OqjmmEF9ptxC6f0Xjzwc8Ff/VeEZSAKa7vr7YhT1LYo1Xkt0+TYHSFyqvdvK4pzy/iMAT/EthxxwGfRIeGWlLEc+QYINm81/AcRtakVZNTSPayBvOH8Wqxuuh3DwXaSUP/4OruIHl54NwyTfbnH2ch665dds5Rn5HoV+R/ai9YGzPQG3vZj9p69Jp0gMQCGp+9dzfNvlzLqGWEhpVS4lB8cIAN/HmSnpVh4j4OvrBZfamLFB1OOAbtbKw+UmgDWLwuP/rm9IMwNBvtIRAFpmbnCyljf/XGm7DA/aMQtXG7YpeD+5GRUoW8YfNQROBLRHuPom3e2jnfRySvPHu806bS6bo0vYytDgvJ8nhasVqCuz+uK2y",
       "body": {
-        "s3Location": "s3://reinvent-susty/source/--121.64-39.68--121.68-39.72",
+        "s3Location": "s3://reinventworkshopsus201/output/--121.64-39.68--121.68-39.72",
         "asdi_url": "s3://sentinel-s2-l1c/tiles/10/S/FJ/2019/11/1/0"
       },
       "attributes": {
@@ -102,7 +102,7 @@ test = {
       "messageId": "726c9144-7547-4331-b3fc-c8b3345a94ca",
       "receiptHandle": "AQEBJLs3Pqi9ybU7cf5Ts/vr79/elsEdjZqWR0p8zAXoBbMl+MlxZqCH8hvgeY2TZ5dOKcVKJMyKgMjjHng7CaelYg2yasJ7TlPQUExBAiqJMGimZZXFqykHsBk2TrU0MMdTeSTUdG5USL0+l27kZm1/WjxGH9Db9fOhw2UGIswjSEipoN47oZzvanlvJRah6i9gYgkk4GJEb+G5KCLWOTUbXOveUebmKTefHZWe3Uwa9ZIoWT2PyaTkfmomf1Ts1w7KZ3GMbvsM4xkWALNUoCpiFcAVi8dfWqDmnmYzvTYEfwr0c3OL1ZcZbpXrYPMgpcJ/iCYKNgv8Zp2hI2ltxiTbwZcZ54uxuOwGw0JbIgXco4NI1pFwTlK+e1FBk+YVpjGa",
       "body": {
-        "s3Location": "s3://reinvent-susty/source/--121.64-39.68--121.68-39.72",
+        "s3Location": "s3://reinventworkshopsus201/output/--121.64-39.68--121.68-39.72",
         "asdi_url": "s3://sentinel-s2-l1c/tiles/10/T/FK/2019/8/23/0"
       },
       "attributes": {
@@ -119,5 +119,4 @@ test = {
     }
   ]
 }
-
 #lambda_handler(test,{})
