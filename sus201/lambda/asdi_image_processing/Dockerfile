@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/python:3.8
+FROM public.ecr.aws/lambda/python:3.7
 
 COPY processing-requirements.txt ./
 RUN pip install -r processing-requirements.txt 
