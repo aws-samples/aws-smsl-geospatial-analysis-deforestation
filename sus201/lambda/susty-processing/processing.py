@@ -16,14 +16,16 @@ def lambda_handler(event, context):
     #for record in responseJson["Records"]:
         print('record json load is ' + str(record))
         print(str(record["body"]))
-        #eventBody = json.loads(str(record["body"]))
-        eventBody = record["body"]
-
-        s3Location = eventBody['s3Location']
-        asdi_url = eventBody['asdi_url']
-
+        eventBody = json.loads(record["body"])
+        #eventBody = record["body"]
+        #print()
+        s3Location = str(eventBody['s3Location'])
+        asdi_url = str(eventBody['asdi_url'])
+        
+        print(s3Location)
+        print(asdi_url)
         #bucketpathsplit = record["body"]["s3Location"].split("//")[1].split("/")
-        bucketpathsplit = s3Location.split("//")[1].split("/")
+        bucketpathsplit = s3Location.split("/")
         BUCKET_NAME = bucketpathsplit[0]
         KEY = "/".join(bucketpathsplit[1:])
         print(BUCKET_NAME)
@@ -34,7 +36,7 @@ def lambda_handler(event, context):
         print(asdiS3bucket)
         asdiS3key = "/".join(asdisplittedpath[3:])
         print(asdiS3key)
-        imagename = asdisplittedpath[-4]+asdisplittedpath[-3]+asdisplittedpath[-2]+'.png'
+        imagename = asdisplittedpath[-4]+'-'+asdisplittedpath[-3]+'-'+asdisplittedpath[-2]+'.png'
         print(imagename)
 
         urlB04 = asdiS3bucket + asdiS3key + "/B04.jp2"

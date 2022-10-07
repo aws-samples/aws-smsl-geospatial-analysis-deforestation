@@ -59,7 +59,7 @@ def lambda_handler(event, context):
 
     
     #folderName = coordA + '-' + coordB + '-' + coordC + '-' + coordD + '-' +  startDate + endDate
-    folderName = coordA + '-' + coordB + '-' + coordC + '-' + coordD + '-' + startDate + '-' + endDate
+    folderName = coordA + '-' + coordB + '-' + coordC + '-' + coordD 
     targetFolderName = destinationFolder+'/'+folderName+'/'
 
     print('foldername = ' + targetFolderName)

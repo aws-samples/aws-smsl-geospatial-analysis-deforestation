@@ -22,7 +22,7 @@ def lambda_handler(event, context):
     stage = ""
     if route_key is None or connection_id is None:
         return {'statusCode': 400}
-
+    
     response = {'statusCode': 200}
     if route_key == 'sendData':
 
@@ -61,7 +61,7 @@ def lambda_handler(event, context):
     Instance ID from from your Sentinel Hub account 
     '''
     config.instance_id = os.environ['instance_id']
-
+    print('after config')
     if config.instance_id == '':
         print("Warning! To use WFS functionality, please configure the `instance_id`.")
     
@@ -82,21 +82,21 @@ def lambda_handler(event, context):
     tiles = []
     #s3_urls = []
     #filtered_urls = []
-
+    print('before for loop')
     uniqueKeys = []
     for tile_info in wfs_iterator:
         path = tile_info['properties']['path']
-        if(path.__contains__('tiles/10/S/FJ')):
-            pathEntries = path.split('/')
-            key = pathEntries[len(pathEntries)-4]+'-' + pathEntries[len(pathEntries)-3]
-            if(key not in uniqueKeys):
-                uniqueKeys.append(key)
-                tiles.append(tile_info['properties']['path'])
+        pathEntries = path.split('/')
+        key = pathEntries[len(pathEntries)-4]+'-' + pathEntries[len(pathEntries)-3]
+        if(key not in uniqueKeys):
+            uniqueKeys.append(key)
+            tiles.append(tile_info['properties']['path'])
 
     sqs = boto3.client('sqs')
-    s3Folder = os.environ['s3Bucket'] + '-' + coordA + '-' + coordB + '-' + coordC + '-' + coordD 
+    s3Folder = os.environ['s3Bucket'] +  coordA + '-' + coordB + '-' + coordC + '-' + coordD 
     message = {}
     
+    print('URL loop')
     for url in tiles:
         message["s3Location"] = s3Folder
         message["asdi_url"] = url
