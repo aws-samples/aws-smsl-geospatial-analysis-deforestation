@@ -55,12 +55,13 @@ def lambda_handler(event, context):
         
 
     bucketName = os.environ['bucketName']
-    destinationFolder = os.environ['folder']
+    #destinationFolder = os.environ['folder']
 
     
     #folderName = coordA + '-' + coordB + '-' + coordC + '-' + coordD + '-' +  startDate + endDate
     folderName = coordA + '-' + coordB + '-' + coordC + '-' + coordD 
-    targetFolderName = destinationFolder+'/'+folderName+'/'
+    #targetFolderName = destinationFolder+'/'+folderName+'/'
+    targetFolderName = folderName+'/'
 
     print('foldername = ' + targetFolderName)
     files = getFiles(bucketName,targetFolderName)
@@ -69,8 +70,8 @@ def lambda_handler(event, context):
     for file in files:
         imageData = {}
         imageData['url'] = create_presigned_url(bucketName, file)
-        imageData['titleId'] = file.split('/')[2]
-        imageData['date'] = file.split('/')[2].split('.')[0]
+        imageData['titleId'] = file.split('/')[1]
+        imageData['date'] = file.split('/')[1].split('.')[0]
         data_response.append(imageData)
 
     data_payload = {}

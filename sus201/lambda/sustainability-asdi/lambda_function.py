@@ -93,7 +93,7 @@ def lambda_handler(event, context):
             tiles.append(tile_info['properties']['path'])
 
     sqs = boto3.client('sqs')
-    s3Folder = os.environ['s3Bucket'] +  coordA + '-' + coordB + '-' + coordC + '-' + coordD 
+    s3Folder = os.environ['s3Bucket'] +'/'+  coordA + '-' + coordB + '-' + coordC + '-' + coordD 
     message = {}
     
     print('URL loop')
