@@ -1,4 +1,4 @@
-var url = 'wss://xxxxxxxxx.execute-api.us-east-1.amazonaws.com/staging';
+var url = 'wss://xxxxxxxxx.execute-api.us-east-1.amazonaws.com/staging/';
 
 
 function connect(url) {
