@@ -183,11 +183,6 @@ function jsonUIbuilder(jsonPayload={}){
     textDiv.innerHTML = jsonPayload.date
     div.appendChild(textDiv);
     
-    var textDiv = document.createElement("div");
-    textDiv.setAttribute('class', 'text');
-    textDiv.innerHTML = jsonPayload.titleId
-    div.appendChild(textDiv);
-    
     document.getElementById("slideshow-container").appendChild(div);
     
     /*dots*/
