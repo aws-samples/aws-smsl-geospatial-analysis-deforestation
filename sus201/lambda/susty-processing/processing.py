@@ -8,6 +8,7 @@ import json
 import boto3
 import io
 import numpy as np
+import earthpy.plot as ep
 
 
 def lambda_handler(event, context):
@@ -97,6 +98,7 @@ def lambda_handler(event, context):
         
         fig, (ax1) = plt.subplots(1, figsize=(12, 12),num=1, clear=True)
         im1 = ax1.imshow(np.squeeze(ndvi_density_class), cmap=nbr_cmap)
+        ep.draw_legend(im_ax=im1, classes=classes, titles=ndvi_cat_names)
         ax1.axis('off')
         img_data = io.BytesIO()
         fig.savefig(img_data, dpi=100, bbox_inches='tight', pad_inches=0, format='png')
