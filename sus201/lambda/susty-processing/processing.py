@@ -39,7 +39,7 @@ def lambda_handler(event, context):
         print(asdiS3bucket)
         asdiS3key = "/".join(asdisplittedpath[3:])
         print(asdiS3key)
-        imagename = asdisplittedpath[-4]+'-'+asdisplittedpath[-3]+'-'+asdisplittedpath[-2]+'.png'
+        imagename = asdisplittedpath[-6]+asdisplittedpath[-5] + '+' + asdisplittedpath[-4]+'-'+asdisplittedpath[-3]+'-'+asdisplittedpath[-2]+'.png'
         print(imagename)
 
         urlB04 = asdiS3bucket + asdiS3key + "/B04.jp2"

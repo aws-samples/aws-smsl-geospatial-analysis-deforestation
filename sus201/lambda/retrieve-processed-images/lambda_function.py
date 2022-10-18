@@ -70,8 +70,8 @@ def lambda_handler(event, context):
     for file in files:
         imageData = {}
         imageData['url'] = create_presigned_url(bucketName, file)
-        imageData['titleId'] = file.split('/')[1]
-        imageData['date'] = file.split('/')[1].split('.')[0]
+        imageData['titleId'] = file.split('/')[1].split('+')[1]
+        imageData['date'] = file.split('/')[1].split('+')[1].split('.')[0]
         data_response.append(imageData)
 
     data_payload = {}
