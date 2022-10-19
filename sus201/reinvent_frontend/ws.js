@@ -1,38 +1,183 @@
-var url = 'wss://xxxxxxxxx.execute-api.us-east-1.amazonaws.com/staging/';
+var url = 'wss://YOUR WEBSOCKET URL HERE eg. 0123456789.execute-api.us-west-2.amazonaws.com/staging/'
 
+// References
+/*
+1/ timlinr - https://github.com/juanbrujo/jQuery-Timelinr
+2/ toastr - https://github.com/CodeSeven/toastr
+3/ jQuery - https://jquery.com/
+4/ w3schools - 
+https://www.w3schools.com/js/
+https://www.w3schools.com/jquery/
+5/ react - https://reactjs.org/docs/hello-world.html
+6/ aws-samples -
+https://github.com/aws-samples/websocket-api-cognito-auth-sample
+https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/python/cross_service/apigateway_websocket_chat
+https://github.com/aws-samples/simple-websockets-chat-app
+*/
+
+import './toastr.min.js';
+import './jquery.timelinr-0.9.7v2.js'
+
+
+$(document).ready(function(){
+  var options = {
+      orientation:              'horizontal', // value: horizontal | vertical, default to horizontal
+      containerDiv:             '#timeline',  // value: any HTML tag or #id, default to #timeline
+      datesDiv:                 '#dates',     // value: any HTML tag or #id, default to #dates
+      datesSelectedClass:       'selected',   // value: any class, default to selected
+      datesSpeed:               'normal',     // value: integer between 100 and 1000 (recommended) or 'slow', 'normal' or 'fast'; default to normal
+      issuesDiv:                '#issues',    // value: any HTML tag or #id, default to #issues
+      issuesSelectedClass:      'selected',   // value: any class, default to selected
+      issuesSpeed:              1000,       // value: integer between 100 and 1000 (recommended) or 'slow', 'normal' or 'fast'; default to fast
+      issuesTransparency:       0.0,          // value: integer between 0 and 1 (recommended), default to 0.2
+      issuesTransparencySpeed:  1000,          // value: integer between 100 and 1000 (recommended), default to 500 (normal)
+      prevButton:               '#prev',      // value: any HTML tag or #id, default to #prev
+      nextButton:               '#next',      // value: any HTML tag or #id, default to #next
+      arrowKeys:                'true',      // value: true | false, default to false
+      startAt:                  1,            // value: integer, default to 1 (first)
+      autoPlay:                 'false',      // value: true | false, default to false
+      autoPlayDirection:        'forward',    // value: forward | backward, default to forward
+      autoPlayPause:            2000          // value: integer (1000 = 1 seg), default to 2000 (2segs)
+    }
+  $('#timeline').timelinr(options)
+}); 
+
+$(document).on('load','#issues li', function() {
+     //timeline(options);
+});
+
+$( window ).resize(function() {
+});
+
+function toast(type, message){
+
+toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": false,
+    "positionClass": "toast-top-center",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "2000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
+
+if (type == "success"){
+toastr.success(message);
+}
+else if (type == "error"){
+toastr.error(message)
+}
+else if (type == "warning"){
+toastr.warning(message)
+}
+else if (type == "info"){
+toastr.info(message)
+}
+else if (type == "howTo"){
+
+toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": true,
+    "progressBar": true,
+    "positionClass": "toast-top-center",
+    "preventDuplicates": true,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "0",
+    "extendedTimeOut": "0",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
+
+toastr.info("</br>----</br>How to use the Workshop Sample UI</br>----</br></br>1/ Find a Latitude and Longitude value</br></br>2/ Get a time frame that you would like to see changes in forestry</br></br>3/ Submit the data</br></br>4/ Query the data</br></br>5/ You can use your keyboard arrow keys and mouse clicks to look through map tiles</br></br>*/ The center of the loading circle is clickable to make it disappear ;)", "Welcome to SUS201!");
+
+}
+
+
+
+}
+
+function timeLine(options){
+  //$('#timeline').timelinr(options)
+}
 
 function connect(url) {
-  var ws = new WebSocket(url);
+  var ws = new WebSocket(url); 
+
   ws.onopen = function(event) {
     console.log("socket open")
     console.log(event)
     /*ws.send(JSON.stringify({
         action: 'sendmessage'
     }));*/
+
+    toast("success", "Connected to Websocket");
+    toast("howTo", "");
   };
 
   ws.onmessage = function(event) {
+    console.log(event)
     if (event.data !== ""){
+        toast("success", "Data Recieved")
+
         console.log('Recieved data:', event.data);
         console.log('Full message from server', event)
+        try{
         const cleanString = str => str.split('"')[1].replace(/'/g, '"');
         var parsed_data = JSON.parse(cleanString(event.data))
         console.log(parsed_data)
         console.log(parsed_data[0])
         console.log(parsed_data['tiles'])
         parseJSONpayload(parsed_data['tiles']);
+        setTimeout(function (){
+          //reload timeline to take note of new DOM elements
+          var options = {
+              arrowKeys:                'true',      // value: true | false, default to false
+              startAt:                  1,            // value: integer, default to 1 (first)
+              autoPlay:                 'false',      // value: true | false, default to false
+              autoPlayDirection:        'forward',    // value: forward | backward, default to forward
+              autoPlayPause:            2000          // value: integer (1000 = 1 seg), default to 2000 (2segs)
+            }
+          $('#timeline').timelinr(options)
+        }, 2000);//Wait 2 seconds
+        }catch(e){
+          console.log("Error Data")
+          console.log(e)
+          toast("error", "Something wrong with Data Payload")
+        }
     }
-    document.getElementById("loaderDiv").classList.add("hideLoader");
+    else{
+      toast("success", "Successful websocket send-recieve")
+    }
+    setTimeout(function (){
+      document.getElementById("loaderDiv").classList.add("hideLoader");
+    }, 3000);//Wait 3 seconds
   };
 
   ws.onclose = function(event) {
     console.log('Socket is closed. Reconnect will be attempted in 5 second.', event.reason);
+    toast("warning", "WebSocket connection Closed")
+
     setTimeout(function() {
       connect(url);
     }, 5000);
   };
 
   ws.onerror = function(error) {
+    toast("error", "WebSocket encountered an Error")
+
     console.error('Socket encountered error: ', error.message, 'Closing socket');
     console.log(error)
     ws.close();
@@ -43,10 +188,14 @@ document.getElementById("submitbtn").addEventListener("click", function () {
   var parsed_form = parseFormToJSON(document.getElementById("coordinatesform"));
   var websocket_payload = generateWebsocketPayload("sendData", parsed_form)
   console.log("sending data")
+
   document.getElementById("loaderDiv").classList.remove("hideLoader");
   if (ws.readyState !== WebSocket.CLOSED) {
+
    console.log("Socket Open; Ok to send message")
    ws.send(websocket_payload);
+
+  toast("success", "Sending Data for Processing")
   }
   else{
     console.log("Socket Closed; Attempting to reopen socket to send message")
@@ -62,6 +211,10 @@ document.getElementById("clearbtn").addEventListener("click", function () {
 });
 
 document.getElementById("querybtn").addEventListener("click", function () {
+
+  timelineClearer()
+  timelineBuilder()
+
   console.log("query data from socket endpoint")
   var parsed_form = parseFormToJSON(document.getElementById("coordinatesform"));
   var websocket_payload = generateWebsocketPayload("queryData", parsed_form)
@@ -70,6 +223,8 @@ document.getElementById("querybtn").addEventListener("click", function () {
   if (ws.readyState !== WebSocket.CLOSED) {
    console.log("Socket Open; Ok to send message")
    ws.send(websocket_payload);
+
+   toast("success", "Querying Data")
   }
   else{
     console.log("Socket Closed; Attempting to reopen socket to send message")
@@ -146,17 +301,12 @@ function parseJSONpayload(jsonPayload={}){
     }
     else{
 
-        /* clear existing elements */
-        var slideshowNode = document.getElementById("slideshow-container");
-        var dotsNode = document.getElementById("slideshow-dots");
-        slideshowNode.innerHTML = '';
-        dotsNode.innerHTML = '';
         /* iterate through json array */
         for (var i = 0; i < jsonPayload.length; i++){
           //console.log("array index: " + i);
           var obj = jsonPayload[i];
 
-          jsonUIbuilder(obj);
+          jsonUIbuilder2(obj);
 
           for (var key in obj){
             var value = obj[key];
@@ -183,6 +333,11 @@ function jsonUIbuilder(jsonPayload={}){
     textDiv.innerHTML = jsonPayload.date
     div.appendChild(textDiv);
     
+    /*var textDiv = document.createElement("div");
+    textDiv.setAttribute('class', 'text');
+    textDiv.innerHTML = jsonPayload.titleId
+    div.appendChild(textDiv);*/
+    
     document.getElementById("slideshow-container").appendChild(div);
     
     /*dots*/
@@ -192,3 +347,85 @@ function jsonUIbuilder(jsonPayload={}){
 
 }
 
+function jsonUIbuilder2(jsonPayload={}){
+/*
+      <ul id="dates">
+      <li><a href="#2022-7-03">2022-7-03</a></li>
+      <li><a href="#2022-7-04">2022-7-04</a></li>
+      <li><a href="#2022-7-05">2022-7-05</a></li>
+    </ul>
+    <ul id="issues">
+      <li id="2022-7-03">
+        <img src="https://roda.sentinel-hub.com/sentinel-s2-l1c/tiles/10/S/FJ/2020/6/3/0/preview.jpg" width="450" height="450" />
+      </li>
+*/
+/*Steps:
+1/Create li for #dates FORMAT: <li><a href="#2022-7-03">2022-7-03</a></li>
+2/Create li for #issues FORMAT: 
+      <li id="2022-7-03">
+        <img src="https://roda.sentinel-hub.com/sentinel-s2-l1c/tiles/10/S/FJ/2020/6/3/0/preview.jpg" width="450" height="450" />
+      </li>
+*/
+var li_dates = document.createElement("li");
+var a_dates = document.createElement("a");
+a_dates.setAttribute('href', '#'+jsonPayload.date);
+a_dates.innerHTML = jsonPayload.date
+li_dates.appendChild(a_dates);
+//document.getElementById("dates").appendChild(li_dates);
+$('#dates').append(li_dates);
+
+var li_issues = document.createElement("li");
+li_issues.id = jsonPayload.date;
+var img_issues = document.createElement("img");
+img_issues.setAttribute('src', jsonPayload.url);
+img_issues.setAttribute('class', 'tileDisplay');
+li_issues.appendChild(img_issues);
+var legend_issues = document.createElement("img");
+legend_issues.setAttribute('src', 'legend.png');
+legend_issues.setAttribute('class', 'legendDisplay');
+li_issues.appendChild(legend_issues)
+//document.getElementById("issues").appendChild(li_issues);
+$('#issues').append(li_issues);
+}
+
+function timelineClearer(){
+  /* clear existing elements */
+  /*var slideshowNode = document.getElementById("slideshow-container");
+  var dotsNode = document.getElementById("slideshow-dots");
+  slideshowNode.innerHTML = '';
+  dotsNode.innerHTML = '';*/
+  $('#timeline').unbind().removeData();
+  $('#dates').remove(); //remove deletes this node and the children
+  $('#issues').remove();//empty removes everything inside
+  $('#timeline').remove();
+
+}
+
+function timelineBuilder(){
+  var timeline_div = document.createElement("div")
+  var ul_issues = document.createElement("ul");
+  var ul_dates = document.createElement("ul");
+  var div_left = document.createElement("div")
+  var div_right = document.createElement("div")
+  var a_next = document.createElement("a")
+  var a_prev = document.createElement("a")
+  ul_issues.id = 'issues';
+  ul_dates.id = 'dates';
+  timeline_div.id = 'timeline'
+  div_left.id = 'grad_left'
+  div_right.id = 'grad_right'
+  a_next.id = 'next'
+  a_prev.id = 'prev'
+  a_next.setAttribute('href', '#');
+  a_prev.setAttribute('href', '#');
+
+  $('#imgDiv').append(timeline_div);
+  $('#timeline').append(ul_dates);
+  $('#timeline').append(ul_issues);
+  $('#timeline').append(div_left);
+  $('#timeline').append(div_right);
+  $('#timeline').append(a_next);
+  $('#timeline').append(a_prev);
+  
+
+}
