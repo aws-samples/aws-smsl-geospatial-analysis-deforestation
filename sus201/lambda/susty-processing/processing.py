@@ -39,7 +39,7 @@ def lambda_handler(event, context):
         print(asdiS3bucket)
         asdiS3key = "/".join(asdisplittedpath[3:])
         print(asdiS3key)
-        imagename = asdisplittedpath[-6]+asdisplittedpath[-5] + '+' + asdisplittedpath[-4]+'-'+asdisplittedpath[-3]+'-'+asdisplittedpath[-2]+'.png'
+        imagename = asdisplittedpath[-6]+asdisplittedpath[-5] + '+' + asdisplittedpath[-4]+'-'+str(asdisplittedpath[-3]).zfill(2)+'-'+asdisplittedpath[-2]+'.png'
         print(imagename)
 
         urlB04 = asdiS3bucket + asdiS3key + "/B04.jp2"
@@ -96,9 +96,9 @@ def lambda_handler(event, context):
         # img_data.seek(0)
         
         
-        fig, (ax1) = plt.subplots(1, figsize=(12, 12),num=1, clear=True)
+        fig, (ax1) = plt.subplots(1, figsize=(12, 10),num=1, clear=True)
         im1 = ax1.imshow(np.squeeze(ndvi_density_class), cmap=nbr_cmap)
-        ep.draw_legend(im_ax=im1, classes=classes, titles=ndvi_cat_names)
+        #ep.draw_legend(im_ax=im1, classes=classes, titles=ndvi_cat_names)
         ax1.axis('off')
         img_data = io.BytesIO()
         fig.savefig(img_data, dpi=100, bbox_inches='tight', pad_inches=0, format='png')
