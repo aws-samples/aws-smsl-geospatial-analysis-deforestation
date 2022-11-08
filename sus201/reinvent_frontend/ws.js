@@ -1,4 +1,5 @@
-var url = 'wss://YOUR WEBSOCKET URL HERE eg. 0123456789.execute-api.us-west-2.amazonaws.com/staging/'
+//var url = 'wss://YOUR WEBSOCKET URL HERE eg. 0123456789.execute-api.us-west-2.amazonaws.com/staging/'
+var url = 'wss://a0tjgldo46.execute-api.us-east-1.amazonaws.com/staging';
 
 // References
 /*
@@ -17,7 +18,6 @@ https://github.com/aws-samples/simple-websockets-chat-app
 
 import './toastr.min.js';
 import './jquery.timelinr-0.9.7v2.js'
-
 
 $(document).ready(function(){
   var options = {
@@ -49,65 +49,133 @@ $(document).on('load','#issues li', function() {
 $( window ).resize(function() {
 });
 
-function toast(type, message){
+function toast(type, message=""){
+  toastr.options = {
+      "closeButton": false,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": false,
+      "positionClass": "toast-bottom-left",
+      "preventDuplicates": true,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "2000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+  
+  if (type == "success"){
+  toastr.success(message);
+  }
+  else if (type == "error"){
+  toastr.error(message)
+  }
+  else if (type == "warning"){
+  toastr.warning(message)
+  }
+  else if (type == "info"){
+  toastr.info(message)
+  }
+  else if (type == "howTo"){
+  
+  toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": true,
+      "progressBar": true,
+      "positionClass": "toast-bottom-left",
+      "preventDuplicates": true,
+      "preventOpenDuplicates": true,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "0",
+      "extendedTimeOut": "0",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+  
+  //You will need to escape the next line with '\'
+  var instructions = "\
+  </br>----</br>\
+  How to use the Workshop Sample UI</br>----</br></br>\
+  1/ Find a Latitude and Longitude value</br></br>\
+  2/ Get a time frame that you would like to see changes in forestry</br></br>\
+  3/ Submit the data</br></br>\
+  4/ Ensure you keep the same data values you entered before you query</br></br>\
+  5/ Query the data</br></br>\
+  6/ You can use your keyboard arrow keys and mouse clicks to look through map tiles</br></br>\
+  */ The center of the loading circle is clickable to make it disappear ;)\
+  "
 
-toastr.options = {
-    "closeButton": false,
-    "debug": false,
-    "newestOnTop": false,
-    "progressBar": false,
-    "positionClass": "toast-top-center",
-    "preventDuplicates": true,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "2000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
+  toastr.info(instructions, "Welcome to SUS201!");
+  
+  }
+  else if (type == "clear"){
+    toastr.clear()
   }
 
-if (type == "success"){
-toastr.success(message);
-}
-else if (type == "error"){
-toastr.error(message)
-}
-else if (type == "warning"){
-toastr.warning(message)
-}
-else if (type == "info"){
-toastr.info(message)
-}
-else if (type == "howTo"){
+  else if (type == "samples"){
 
-toastr.options = {
+  //You will need to escape the next line with '\'
+  var samples = "\
+  1/ Paradise, California, USA </br>\
+  Lat: 39.45  </br>\
+  Long: -121.75 </br>\
+  TimeStart: 2017-01-01 </br>\
+  TimeEnd: 2022-06-01 </br>\
+  <button type=\"button\" class=\"btn clear\">Use this Sample</button>\
+  </br>\
+  "
+
+    toastr.info(samples,
+    "Sample Locations and Times",
+    {
     "closeButton": true,
-    "debug": false,
-    "newestOnTop": true,
     "progressBar": true,
-    "positionClass": "toast-top-center",
+    "timeOut": 0,
+    "extendedTimeOut": 0,
     "preventDuplicates": true,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
+    "preventOpenDuplicates": true,
     "timeOut": "0",
     "extendedTimeOut": "0",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
+    "positionClass" : "toast-bottom-left",
+    "tapToDismiss": true,
+    "onclick" : function() {sampledata(1);}
+    });
+  //You will need to escape the next line with '\'
+  var samples = "\
+  2/ Random Place with No Tiles </br>\
+  Lat: 99.45  </br>\
+  Long: -34.75 </br>\
+  TimeStart: 2015-01-01 </br>\
+  TimeEnd: 2022-06-01 </br>\
+  <button type=\"button\" class=\"btn clear\">Use this Sample</button>\
+  </br>\
+  "
+    toastr.info(samples,
+    "Sample Locations and Times",
+    {
+    "closeButton": true,
+    "progressBar": true,
+    "timeOut": 0,
+    "extendedTimeOut": 0,
+    "preventDuplicates": true,
+    "preventOpenDuplicates": true,
+    "timeOut": "0",
+    "extendedTimeOut": "0",
+    "positionClass" : "toast-bottom-left",
+    "tapToDismiss": true,
+    "onclick" : function() {sampledata(2);}
+    });
   }
-
-toastr.info("</br>----</br>How to use the Workshop Sample UI</br>----</br></br>1/ Find a Latitude and Longitude value</br></br>2/ Get a time frame that you would like to see changes in forestry</br></br>3/ Submit the data</br></br>4/ Query the data</br></br>5/ You can use your keyboard arrow keys and mouse clicks to look through map tiles</br></br>*/ The center of the loading circle is clickable to make it disappear ;)", "Welcome to SUS201!");
-
-}
-
-
-
-}
+}//end function
 
 function timeLine(options){
   //$('#timeline').timelinr(options)
@@ -124,7 +192,8 @@ function connect(url) {
     }));*/
 
     toast("success", "Connected to Websocket");
-    toast("howTo", "");
+    toast("howTo");
+    
   };
 
   ws.onmessage = function(event) {
@@ -135,23 +204,30 @@ function connect(url) {
         console.log('Recieved data:', event.data);
         console.log('Full message from server', event)
         try{
-        const cleanString = str => str.split('"')[1].replace(/'/g, '"');
-        var parsed_data = JSON.parse(cleanString(event.data))
-        console.log(parsed_data)
-        console.log(parsed_data[0])
-        console.log(parsed_data['tiles'])
-        parseJSONpayload(parsed_data['tiles']);
-        setTimeout(function (){
-          //reload timeline to take note of new DOM elements
-          var options = {
-              arrowKeys:                'true',      // value: true | false, default to false
-              startAt:                  1,            // value: integer, default to 1 (first)
-              autoPlay:                 'false',      // value: true | false, default to false
-              autoPlayDirection:        'forward',    // value: forward | backward, default to forward
-              autoPlayPause:            2000          // value: integer (1000 = 1 seg), default to 2000 (2segs)
+            const cleanString = str => str.split('"')[1].replace(/'/g, '"');
+            var parsed_data = JSON.parse(cleanString(event.data))
+            if(parsed_data['tiles'].length == 0){
+              console.log("0 tiles found")
+              setTimeout(function (){
+                  toast("info", "No map tiles found for queried dataset")
+              }, 2000);//Wait 2 seconds          
+            }else{
+              console.log(parsed_data)
+              console.log(parsed_data[0])
+              console.log(parsed_data['tiles'])
+              parseJSONpayload(parsed_data['tiles']);
+              setTimeout(function (){
+                //reload timeline to take note of new DOM elements
+                var options = {
+                    arrowKeys:                'true',      // value: true | false, default to false
+                    startAt:                  1,            // value: integer, default to 1 (first)
+                    autoPlay:                 'false',      // value: true | false, default to false
+                    autoPlayDirection:        'forward',    // value: forward | backward, default to forward
+                    autoPlayPause:            2000          // value: integer (1000 = 1 seg), default to 2000 (2segs)
+                  }
+                $('#timeline').timelinr(options)
+              }, 2000);//Wait 2 seconds
             }
-          $('#timeline').timelinr(options)
-        }, 2000);//Wait 2 seconds
         }catch(e){
           console.log("Error Data")
           console.log(e)
@@ -168,6 +244,7 @@ function connect(url) {
 
   ws.onclose = function(event) {
     console.log('Socket is closed. Reconnect will be attempted in 5 second.', event.reason);
+    toastr.remove();
     toast("warning", "WebSocket connection Closed")
 
     setTimeout(function() {
@@ -212,6 +289,7 @@ document.getElementById("clearbtn").addEventListener("click", function () {
 
 document.getElementById("querybtn").addEventListener("click", function () {
 
+  //clear the timeline so that the timelinr plugin loads properly
   timelineClearer()
   timelineBuilder()
 
@@ -230,8 +308,17 @@ document.getElementById("querybtn").addEventListener("click", function () {
     console.log("Socket Closed; Attempting to reopen socket to send message")
     connect(url);
     ws.send(websocket_payload); 
-  } 
+  }
 });
+
+document.getElementById("howtobtn").addEventListener("click", function () {
+  toast("howTo");
+});
+
+document.getElementById("samplesbtn").addEventListener("click", function () {
+  toast("clear");
+  toast("samples");
+}); 
 
 document.getElementById("loader").addEventListener("click", function () {
   document.getElementById("loaderDiv").classList.add("hideLoader");
@@ -239,6 +326,41 @@ document.getElementById("loader").addEventListener("click", function () {
 
 }
 connect(url);
+
+
+function sampledata(sampleselect){
+    var lat = "";
+    var lon = "";
+    var datestart = "";
+    var dateend = "";
+  
+    switch(sampleselect) {
+    case 1:
+      lat = "39.45";
+      lon = "-121.75";
+      datestart = "2017-01-01";
+      dateend = "2022-06-01";
+      break;
+    case 2:
+      lat = "99.45";
+      lon = "-34.75";
+      datestart = "2015-01-01";
+      dateend = "2022-06-01";
+      break;
+    default:
+      // code block
+  }
+  document.getElementById("coordinatesform").reset();
+  document.getElementById("data-lat").setRangeText(lat);
+  document.getElementById("data-lon").setRangeText(lon);
+  document.getElementById("data-datestart").setRangeText(datestart);
+  document.getElementById("data-dateend").setRangeText(dateend);
+  toast("clear");
+  setTimeout(function (){
+    toastr.remove();
+  }, 1000);//Wait 1 second
+
+}
 
 function generateWebsocketPayload(websocket_action_path, parsed_form){
   var json = {}  
@@ -264,35 +386,35 @@ function parseFormToJSON(form){
 }
 
 function generateJSONpayload(form_object){
-   console.log("creating json payload")
-   //Sample Expected Payload {"a": "-121.64","b": "39.68","c": "-121.68","d": "39.72","startDate": "2018-11-01T00:00:00","endDate": "2019-11-01T23:59:59"}
-   // a, c = Longitude(min,max); b, d = Latitude(min,max)
-   // form_object contains
-   // {"latitude":"a","longitude":"","startDate":"","endDate":""}
-   console.log(form_object)
-   var object = {}
-   
-   var a = parseFloat(form_object["longitude"])-0.02
-   var b = parseFloat(form_object["latitude"])-0.02
-   var c = parseFloat(form_object["longitude"])+0.02
-   var d = parseFloat(form_object["latitude"])+0.02
+      console.log("creating json payload")
+      //Sample Expected Payload {"a": "-121.64","b": "39.68","c": "-121.68","d": "39.72","startDate": "2018-11-01T00:00:00","endDate": "2019-11-01T23:59:59"}
+      // a, c = Longitude(min,max); b, d = Latitude(min,max)
+      // form_object contains
+      // {"latitude":"a","longitude":"","startDate":"","endDate":""}
+      console.log(form_object)
+      var object = {}
+      
+      var a = parseFloat(form_object["longitude"])-0.02
+      var b = parseFloat(form_object["latitude"])-0.02
+      var c = parseFloat(form_object["longitude"])+0.02
+      var d = parseFloat(form_object["latitude"])+0.02
 
-   object["a"] = a.toFixed(2)
-   object["b"] = b.toFixed(2)
-   object["c"] = c.toFixed(2)
-   object["d"] = d.toFixed(2)
-   
-   var datetime_start = new Date(form_object["startDate"]);
-   var datetime_end = new Date(form_object["endDate"]);
-   datetime_start = datetime_start.toISOString().replace('Z', '');
-   //datetime_end = datetime_end.toISOString().replace('Z', '').replace('T', '');
-   datetime_end = datetime_end.toISOString().replace('Z', '');
+      object["a"] = a.toFixed(2)
+      object["b"] = b.toFixed(2)
+      object["c"] = c.toFixed(2)
+      object["d"] = d.toFixed(2)
+      
+      var datetime_start = new Date(form_object["startDate"]);
+      var datetime_end = new Date(form_object["endDate"]);
+      datetime_start = datetime_start.toISOString().replace('Z', '');
+      //datetime_end = datetime_end.toISOString().replace('Z', '').replace('T', '');
+      datetime_end = datetime_end.toISOString().replace('Z', '');
 
-   object["startDate"] = datetime_start
-   object["endDate"] = datetime_end
+      object["startDate"] = datetime_start
+      object["endDate"] = datetime_end
 
-   console.log(object)
-   return object;
+      console.log(object)
+      return object;
 }
 
 function parseJSONpayload(jsonPayload={}){

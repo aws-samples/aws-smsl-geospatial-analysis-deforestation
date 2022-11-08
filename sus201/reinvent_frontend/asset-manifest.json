@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/static/css/main.a7cba207.css",
-    "main.js": "/static/js/main.90350c2c.js",
+    "main.css": "/static/css/main.a82899ff.css",
+    "main.js": "/static/js/main.88236f1a.js",
     "static/js/787.28cb0dcd.chunk.js": "/static/js/787.28cb0dcd.chunk.js",
     "static/media/reinvent-white.png": "/static/media/reinvent-white.451754f969bf8188f290.png",
     "static/media/text-banner.jpeg": "/static/media/text-banner.64f99afb589e1b4cac33.jpeg",
     "static/media/logo.svg": "/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/index.html",
-    "main.a7cba207.css.map": "/static/css/main.a7cba207.css.map",
-    "main.90350c2c.js.map": "/static/js/main.90350c2c.js.map",
+    "main.a82899ff.css.map": "/static/css/main.a82899ff.css.map",
+    "main.88236f1a.js.map": "/static/js/main.88236f1a.js.map",
     "787.28cb0dcd.chunk.js.map": "/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a7cba207.css",
-    "static/js/main.90350c2c.js"
+    "static/css/main.a82899ff.css",
+    "static/js/main.88236f1a.js"
   ]
 }
