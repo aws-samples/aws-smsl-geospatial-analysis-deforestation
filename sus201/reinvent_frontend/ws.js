@@ -1,19 +1,5 @@
 var url = 'wss://YOUR WEBSOCKET URL HERE eg. 0123456789.execute-api.us-west-2.amazonaws.com/staging/'
 
-// References
-/*
-1/ timlinr - https://github.com/juanbrujo/jQuery-Timelinr
-2/ toastr - https://github.com/CodeSeven/toastr
-3/ jQuery - https://jquery.com/
-4/ w3schools - 
-https://www.w3schools.com/js/
-https://www.w3schools.com/jquery/
-5/ react - https://reactjs.org/docs/hello-world.html
-6/ aws-samples -
-https://github.com/aws-samples/websocket-api-cognito-auth-sample
-https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/python/cross_service/apigateway_websocket_chat
-https://github.com/aws-samples/simple-websockets-chat-app
-*/
 
 import './toastr.min.js';
 import './jquery.timelinr-0.9.7v2.js'
@@ -341,10 +327,10 @@ function sampledata(sampleselect){
       dateend = "2022-06-01";
       break;
     case 2:
-      lat = "99.45";
-      lon = "-34.75";
-      datestart = "2015-01-01";
-      dateend = "2022-06-01";
+      lat = "-16.50";
+      lon = "-39.25";
+      datestart = "2017-08-01";
+      dateend = "2018-03-31";
       break;
     default:
       // code block
@@ -550,3 +536,18 @@ function timelineBuilder(){
   
 
 }
+
+// References
+/*
+1/ timlinr - https://github.com/juanbrujo/jQuery-Timelinr
+2/ toastr - https://github.com/CodeSeven/toastr
+3/ jQuery - https://jquery.com/
+4/ w3schools - 
+https://www.w3schools.com/js/
+https://www.w3schools.com/jquery/
+5/ react - https://reactjs.org/docs/hello-world.html
+6/ aws-samples -
+https://github.com/aws-samples/websocket-api-cognito-auth-sample
+https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/python/cross_service/apigateway_websocket_chat
+https://github.com/aws-samples/simple-websockets-chat-app
+*/
