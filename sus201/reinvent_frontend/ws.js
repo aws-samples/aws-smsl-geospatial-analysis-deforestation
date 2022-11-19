@@ -1,4 +1,4 @@
-//var url = 'wss://YOUR WEBSOCKET URL HERE eg. 0123456789.execute-api.us-west-2.amazonaws.com/staging/'
+var url = 'wss://YOUR WEBSOCKET URL HERE eg. 0123456789.execute-api.us-west-2.amazonaws.com/staging/'
 
 // References
 /*
