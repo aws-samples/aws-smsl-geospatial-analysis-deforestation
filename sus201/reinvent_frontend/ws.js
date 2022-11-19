@@ -127,7 +127,7 @@ function toast(type, message=""){
   1/ Paradise, California, USA </br>\
   Lat: 39.45  </br>\
   Long: -121.75 </br>\
-  TimeStart: 2017-01-01 </br>\
+  TimeStart: 2021-01-01 </br>\
   TimeEnd: 2022-06-01 </br>\
   <button type=\"button\" class=\"btn clear\">Use this Sample</button>\
   </br>\
@@ -150,11 +150,11 @@ function toast(type, message=""){
     });
   //You will need to escape the next line with '\'
   var samples = "\
-  2/ Random Place with No Tiles </br>\
-  Lat: 99.45  </br>\
-  Long: -34.75 </br>\
-  TimeStart: 2015-01-01 </br>\
-  TimeEnd: 2022-06-01 </br>\
+  2/ Atlantic Rainforest - Brazil </br>\
+  Lat: -16.50  </br>\
+  Long: -39.25 </br>\
+  TimeStart: 2017-08-01 </br>\
+  TimeEnd: 2018-03-31 </br>\
   <button type=\"button\" class=\"btn clear\">Use this Sample</button>\
   </br>\
   "
