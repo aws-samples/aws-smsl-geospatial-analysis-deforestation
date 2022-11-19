@@ -38,22 +38,6 @@ def lambda_handler(event, context):
         startDate = body['body']['data']['startDate']
         endDate = body['body']['data']['endDate']
         
-        '''
-        coordA = event.get('body',{}).get('data',{}).get('a')
-        coordB = event.get('body',{}).get('data',{}).get('b')
-        coordC = event.get('body',{}).get('data',{}).get('c')
-        coordD = event.get('body',{}).get('data',{}).get('d')
-        startDate = event.get('body',{}).get('data',{}).get('startDate')
-        endDate = event.get('body',{}).get('data',{}).get('endDate')
-        '''
-
-   
-    #coordA=data['a']
-    #coordB=data['b']
-    #coordC=data['c']
-    #coordD=data['d']
-    #startDate=data['startDate']
-    #endDate=data['endDate']
     
     config = SHConfig()
     
@@ -92,8 +76,12 @@ def lambda_handler(event, context):
             uniqueKeys.append(key)
             tiles.append(tile_info['properties']['path'])
 
+    parsered_startDate = datetime.datetime.strptime(startDate, '%Y-%m-%dT%H:%M:%S.%f')
+    parsered_endDate = datetime.datetime.strptime(endDate, '%Y-%m-%dT%H:%M:%S.%f')
+    
+    
     sqs = boto3.client('sqs')
-    s3Folder = os.environ['s3Bucket'] +'/'+  coordA + '-' + coordB + '-' + coordC + '-' + coordD 
+    s3Folder = os.environ['s3Bucket'] +'/'+  coordA + '-' + coordB + '-' + coordC + '-' + coordD + '-' + str(parsered_startDate.date()) + '-' + str(parsered_endDate.date()) 
     message = {}
     
     print('URL loop')
@@ -109,10 +97,3 @@ def lambda_handler(event, context):
         'statusCode': 200
     }
      
-    #return {
-    #    'statusCode': 200,
-    #    'body': json.dumps('Complete')
-    #}
-
-#response=lambda_handler({"a": "-121.64","b": "39.68","c": "-121.68","d": "39.72","startDate": "2018-11-01T00:00:00","endDate": "2019-11-01T23:59:59"},[])
-#print('response is ' + str(response))

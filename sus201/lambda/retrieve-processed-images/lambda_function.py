@@ -2,6 +2,7 @@ import json
 #import logging
 import os
 import boto3
+import datetime
 from botocore.exceptions import ClientError
 
 client = boto3.client('s3')
@@ -57,9 +58,11 @@ def lambda_handler(event, context):
     bucketName = os.environ['bucketName']
     #destinationFolder = os.environ['folder']
 
+    parsered_startDate = datetime.datetime.strptime(startDate, '%Y-%m-%dT%H:%M:%S.%f')
+    parsered_endDate = datetime.datetime.strptime(endDate, '%Y-%m-%dT%H:%M:%S.%f')
     
     #folderName = coordA + '-' + coordB + '-' + coordC + '-' + coordD + '-' +  startDate + endDate
-    folderName = coordA + '-' + coordB + '-' + coordC + '-' + coordD 
+    folderName = coordA + '-' + coordB + '-' + coordC + '-' + coordD + '-' + str(parsered_startDate.date()) + '-' + str(parsered_endDate.date()) 
     #targetFolderName = destinationFolder+'/'+folderName+'/'
     targetFolderName = folderName+'/'
 
@@ -86,12 +89,6 @@ def lambda_handler(event, context):
        'statusCode': 200
     }
 
-    '''    
-    return {
-        'statusCode': 200,
-        'body': str(response)
-    }
-    '''
 
 def getFiles(bucketName, prefix):
     response = client.list_objects_v2(
@@ -127,7 +124,3 @@ def create_presigned_url(bucketName, objectName, expiration=3600):
     print(response)
     return response
 
-
-
-
-#lambda_handler(testEvent, {})
